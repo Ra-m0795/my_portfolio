@@ -227,13 +227,16 @@ function App() {
     setIsSubmitting(true)
     setFormMessage('')
 
-    try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      })
-      const data = await response.json()
+  const response = await fetch(
+    `${API_URL}/api/contact`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    }
+  )
+    
+    const data = await response.json()
 
       if (!response.ok || !data.success) {
         setFormMessage(data.message || 'Your message could not be sent. Please try again.')
